@@ -12,7 +12,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       searchResults: [],
-      playlistName: 'My Playlist',
+      playlistName: "New Playlist",
       playlistTracks: []
     };
     this.addTrack = this.addTrack.bind(this);
@@ -21,6 +21,10 @@ class App extends React.Component {
     this.savePlaylist = this.savePlaylist.bind(this);
     this.search = this.search.bind(this);
   }
+
+  // Use the track's id property to check if the current song is in the playlistTracks.
+  // If the id is new, add the song to the end of the playlist.
+  // Set the new state of the playlist.
 
   addTrack(track) {
      let tracks = this.state.playlistTracks;
@@ -31,12 +35,20 @@ class App extends React.Component {
      this.setState({ playlistTracks: tracks });
   }
 
+  // Filters tracks that already exist on the playlist
+  // Uses the tracks id property to filter it out of playlistTracks
+  // Sets the new state of the playlist
+
   removeTrack(track) {
     let tracks = this.state.playlistTracks;
     tracks = tracks.filter(currentTrack => currentTrack.id !== track.id);
     this.setState({ playlistTracks: tracks });
   }
 
+  // Accepts a name argument
+  // Sets the state of the playlist name to the input argument
+
+  
   updatePlaylistName(name) {
      this.setState({ playlistName: name });
   }
@@ -65,12 +77,17 @@ class App extends React.Component {
             <SearchBar onSearch={this.search} />  
             <div className="App-playlist">
             <SearchResults searchResults={this.state.searchResults} onAdd={this.addTrack} />
-            <Playlist playlistName={this.state.playlistName} playlistTracks={this.state.playlistTracks} onRemove={this.removeTrack} onNameChange={this.updatePlaylistName}
-                       onSave={this.savePlaylist} />
+            <Playlist
+             playlistName={this.state.playlistName} 
+             playlistTracks={this.state.playlistTracks} 
+             onRemove={this.removeTrack} 
+             onNameChange={this.updatePlaylistName}
+             onSave={this.savePlaylist} 
+             />
           </div>
          </div>
         </div>
-    )
+    );
   }
 }
 
